@@ -26,7 +26,7 @@ class Grid {
             }
         }
 
-        int solve() {
+        void solve() {
         // This function solves the grid and outputs the score.
             int counter = 0;
             for (int i = 0; i < m_length; ++i) {
@@ -51,6 +51,22 @@ class Grid {
                         } else {
                             break;
                         }
+                    }
+                }
+            }
+        }
+
+        int score() {
+            // This function solves the grid and outputs the score.
+            int counter = 0;
+            for (int i = 0; i < m_length; ++i) {
+                for (int j = 0; j < m_width; ++j) {
+                    int current = (*this)(i, j);
+                    if (current == 0) {
+                        counter++;
+                    }
+                    else{
+                        continue;
                     }
                 }
             }
@@ -79,7 +95,8 @@ int main()
     Grid grid(10, 17);
     grid.fillRandom();
     grid.printGrid();
-    cout << grid.solve() << endl;
+    grid.solve();
+    cout << grid.score() << endl;
     cout << "\n--------\n" << endl;
     grid.printGrid();
     return 0;
