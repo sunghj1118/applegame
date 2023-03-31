@@ -35,6 +35,7 @@ class Grid {
                     if (current == 0) {
                         continue;
                     }
+                    // Compares with the values on the right
                     int right = j + 1;
                     int sum = current;
                     while (right < m_width) {
@@ -51,6 +52,25 @@ class Grid {
                         } else {
                             break;
                         }
+                    }
+
+                    // Compares with values below
+                    int down = i + 1;
+                    sum = current;
+                    while (down < m_length) {
+                        int next = (*this)(down, j);
+                        if (sum + next < 10) {
+                            sum += next;
+                            down++;
+                        } else if (sum + next == 10) {
+                            counter += down - i;
+                            for (int k = i; k < down; ++k) {
+                                (*this)(k, j) = 0;
+                            }
+                            break;
+                        } else {
+                            break;
+                        }                    
                     }
                 }
             }
@@ -92,12 +112,25 @@ class Grid {
 
 int main() 
 {  
+    int current_score, new_score, runs = 0;
     Grid grid(10, 17);
     grid.fillRandom();
     grid.printGrid();
     grid.solve();
-    cout << grid.score() << endl;
+    current_score << grid.score();
+    cout << "Run " << 1 << ": " << current_score << endl;
     cout << "\n--------\n" << endl;
+    runs = 2;
+
+    do{
+        grid.solve();
+        current_score = new_score;
+        new_score = grid.score();
+        cout << "Run " << runs << ": " << new_score << endl;
+        cout << "\n--------\n" << endl;
+        runs++;
+    } while (current_score != new_score);
+    
     grid.printGrid();
     return 0;
 }
