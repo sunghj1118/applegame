@@ -1,42 +1,55 @@
 #include <iostream>
+#include <vector>
+#include <random>
 
 using namespace std;
 
-int main() 
-{  
-    int s[10][17];
-	int i,j;
-    
-	for (i = 0; i < 10; i++)
-    {
-        for (j = 0; j < 17; j++)
-        {
-            s[i][j] = (rand() % 9) + 1;
-        }
-    }
-	
-	
-	cout<<"Printing a 2D Array:\n";
-	for (i = 0; i < 10; i++)
-	{
-		for(j = 0; j < 17; j++)
-		{
-			cout<<"\t"<< s[i][j];
-		}
-		cout<<endl;
-	}
-}
+const int N = 17;
+const int M = 10;
 
-/*
 class Grid {
     public:
-        Grid(const unsigned w = 8, const unsigned h = 8) : _w(w), _h(h) {
-        grid.resize(w * h);
+        Grid(int length, int width) : m_length(length), m_width(width), m_data(length * width) {}
 
-    }
+        int getLength() const { return m_length; }
+        int getWidth() const { return m_width; }
 
+        int& operator()(int i, int j) { return m_data[i * m_width + j]; }
+        const int& operator()(int i, int j) const { return m_data[i * m_width + j]; }
+
+        void fillRandom() {
+            random_device rd;
+            mt19937 gen(rd());
+            uniform_int_distribution<> dis(1, 9);
+            
+            for (int i = 0; i < m_length; ++i) {
+                for (int j = 0; j < m_width; ++j) {
+                    (*this)(i, j) = dis(gen);
+                }
+            }
+        }
+
+        void printGrid() const {
+            for (int i = 0; i < m_length; ++i) {
+                for (int j = 0; j < m_width; ++j) {
+                    cout << (*this)(i, j) << " ";
+                }
+                cout << endl;
+            }
+        }
+    
+    
     private:
-        QVector<> grid;
-        unsigned _w, _h;
-}; 
-*/
+        int m_length;
+        int m_width;
+        vector<int> m_data;
+};
+
+
+int main() 
+{  
+    Grid grid(17, 10);
+    grid.fillRandom();
+    grid.printGrid();
+    return 0;
+}
