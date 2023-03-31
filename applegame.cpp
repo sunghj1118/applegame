@@ -4,9 +4,6 @@
 
 using namespace std;
 
-const int N = 17;
-const int M = 10;
-
 class Grid {
     public:
         Grid(int length, int width) : m_length(length), m_width(width), m_data(length * width) {}
